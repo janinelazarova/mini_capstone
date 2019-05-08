@@ -1,7 +1,2 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+product = Product.create({ name: "Book", price: 19, image_url: "https://www.amazon.de/s?k=the+whole+brain+child&language=en_GB&hvadid=167079726126&hvdev=c&hvlocphy=1001467&hvnetw=g&hvpos=1t1&hvqmt=e&hvrand=347129920545743969&hvtargid=kwd-300884705704&tag=googdemozdesk-21&ref=pd_sl_5u6fx4f2f6_e",description: "The Whole-Brain Child: 12 Revolutionary Strategies to Nurture Your Child's Developing Mind"})
+product = Product.create({ name: "Book: No-Drama Discipline", price: 22, image_url: "https://www.amazon.de/No-Drama-Discipline-Whole-Brain-Developing-Parenting/dp/1922247561/ref=sr_1_3?hvadid=167079726126&hvdev=c&hvlocphy=1001467&hvnetw=g&hvpos=1t1&hvqmt=e&hvrand=347129920545743969&hvtargid=kwd-300884705704&keywords=the+whole+brain+child&qid=1557339170&s=gateway&sr=8-3",description: "No-Drama Discipline: The Whole-Brain Way to Calm the Chaos and Nurture Your Child's Developing Mind (Mindful Parenting)"})
