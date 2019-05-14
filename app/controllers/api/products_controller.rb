@@ -1,9 +1,67 @@
 class Api::ProductsController < ApplicationController
-  def about
-      @products = Product.all
+
+
+  def index
+    @products = Product.all
+    render 'index.json.jbuilder'
+  end
+
+  def show
+    @product = Product.find(params[:id]) 
+    render 'show.json.jbuilder'
+  end
+
+  def create
+         @product = Product.new(
+                 name: params[:name],
+                 price:params[:price],
+                 image_url: params[:image_url],
+                 description: params[:description])
+         @product.save
+         render 'show.json.jbuilder'
+  end       
+  
+  def update
+         @product = Product.find(params[:id]) 
+
+         @product.name = params[:name] || @product.name
+         @product.price = params[:price] || @product.price
+         p params[:price]
+         @product.image_url = params[:image_url] || @product.image_url
+         @product.description = params[:description] || @product.description
+
+         @product.save
+         render 'show.json.jbuilder'
+    
+  end
+
+  def destroy
+         @product = Product.find(params[:id])
+         @product.destroy 
+         render json: {message: "Product successfully destroyed!"}
+  end
+
+   #def about
+      #@products = Product.all
      # @products.each do |product|
       #   @products << product
       # end  
-      render 'all_products.json.jbuilder'
-  end
+      #render 'all_products.json.jbuilder'
+  #end
+
+  #def first_product
+    #@first_product = Product.first
+    #render 'first_product.json.jbuilder'
+  #end 
+
+  #def unique_product
+   # @unique_product = Product.find_by(name: “some value”)
+   # render   'first_product.json.jbuilder'
+  #end  
+  
+   #def segment_params
+    #@message = params[:wildcard]
+    #render 'segment_params.json.jbuilder'
+  #end 
+  
 end
