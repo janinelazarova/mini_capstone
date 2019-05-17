@@ -1,14 +1,30 @@
 class Api::ProductsController < ApplicationController
 
-
   def index
-    @products = Product.all
-    render 'index.json.jbuilder'
-  end
+          @products = Product.all.order(:id)
+
+          if params[:search]
+                  @products = @products.where("name iLike ?", "%#{params[:search]}%")
+          end
+    
+          if params[:discount]
+                  @products = @products.where("price < ?", 9)
+          end
+    
+          if params[:sort] == "price"
+               if params[:sort_order] == "desc"
+                       @products = @products.order(price: :desc)
+               else
+                       @products = @products.order(:price)
+               end
+          end
+
+          render 'index.json.jbuilder'                        
+   end
 
   def show
-    @product = Product.find(params[:id]) 
-    render 'show.json.jbuilder'
+          @product = Product.find(params[:id]) 
+          render 'show.json.jbuilder'
   end
 
   def create
@@ -16,9 +32,18 @@ class Api::ProductsController < ApplicationController
                  name: params[:name],
                  price:params[:price],
                  image_url: params[:image_url],
-                 description: params[:description])
-         @product.save
-         render 'show.json.jbuilder'
+                 description: params[:description],
+                 active: params[:active]
+                 )
+
+        if @product.save
+          # happy path
+          render 'show.json.jbuilder'
+        else
+          # sad path
+          render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+        end
+    
   end       
   
   def update
@@ -29,9 +54,15 @@ class Api::ProductsController < ApplicationController
          p params[:price]
          @product.image_url = params[:image_url] || @product.image_url
          @product.description = params[:description] || @product.description
-
-         @product.save
-         render 'show.json.jbuilder'
+         @product.active = params[:active] || @product.active
+        
+        if @product.save
+          # happy path
+          render 'show.json.jbuilder'
+        else
+          # sad path
+          render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+        end
     
   end
 
@@ -41,27 +72,6 @@ class Api::ProductsController < ApplicationController
          render json: {message: "Product successfully destroyed!"}
   end
 
-   #def about
-      #@products = Product.all
-     # @products.each do |product|
-      #   @products << product
-      # end  
-      #render 'all_products.json.jbuilder'
-  #end
-
-  #def first_product
-    #@first_product = Product.first
-    #render 'first_product.json.jbuilder'
-  #end 
-
-  #def unique_product
-   # @unique_product = Product.find_by(name: “some value”)
-   # render   'first_product.json.jbuilder'
-  #end  
-  
-   #def segment_params
-    #@message = params[:wildcard]
-    #render 'segment_params.json.jbuilder'
-  #end 
+   
   
 end
