@@ -32,7 +32,8 @@ class Api::ProductsController < ApplicationController
                  name: params[:name],
                  price:params[:price],
                  description: params[:description],
-                 active: params[:active]
+                 active: params[:active],
+                 supplier_id: params[:supplier_id]
                  )
 
         if @product.save
@@ -52,6 +53,7 @@ class Api::ProductsController < ApplicationController
          @product.price = params[:price] || @product.price
          @product.description = params[:description] || @product.description
          @product.active = params[:active] || @product.active
+         @product.supplier_id = params[:supplier_id] || @product.supplier_id
         
         if @product.save
           # happy path
