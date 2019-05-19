@@ -1,26 +1,26 @@
 class Api::ProductsController < ApplicationController
 
   def index
-          @products = Product.all.order(:id)
+    @products = Product.all
 
-          if params[:search]
-                  @products = @products.where("name iLike ?", "%#{params[:search]}%")
-          end
-    
-          if params[:discount]
-                  @products = @products.where("price < ?", 9)
-          end
-    
-          if params[:sort] == "price"
-               if params[:sort_order] == "desc"
-                       @products = @products.order(price: :desc)
-               else
-                       @products = @products.order(:price)
-               end
-          end
+    if params[:search]
+      @products = @products.where("name iLike ?", "%#{params[:search]}%")
+    end
 
-          render 'index.json.jbuilder'                        
-   end
+    if params[:discount]
+      @products = @products.where("price < ?", 9)
+    end
+
+    if params[:sort] == "price"
+      if params[:sort_order] == "desc"
+        @products = @products.order(price: :desc)
+      else
+        @products = @products.order(:price)
+      end
+    end
+
+    render 'index.json.jbuilder'                        
+  end
 
   def show
           @product = Product.find(params[:id]) 
@@ -31,7 +31,6 @@ class Api::ProductsController < ApplicationController
          @product = Product.new(
                  name: params[:name],
                  price:params[:price],
-                 image_url: params[:image_url],
                  description: params[:description],
                  active: params[:active]
                  )
@@ -47,12 +46,10 @@ class Api::ProductsController < ApplicationController
   end       
   
   def update
-         @product = Product.find(params[:id]) 
+         @product = Product.find(params[:id])
 
          @product.name = params[:name] || @product.name
          @product.price = params[:price] || @product.price
-         p params[:price]
-         @product.image_url = params[:image_url] || @product.image_url
          @product.description = params[:description] || @product.description
          @product.active = params[:active] || @product.active
         

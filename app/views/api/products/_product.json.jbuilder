@@ -1,10 +1,12 @@
   json.id product.id
   json.name product.name
   json.price product.price
-  json.image_url product.image_url
   json.description product.description
   json.is_discounted product.is_discounted?
   json.active product.active
+  json.supplier_name product.supplier.name
+  json.images product.images
+
   
   json.formated_fields do
     json.price number_to_currency(product.price)
