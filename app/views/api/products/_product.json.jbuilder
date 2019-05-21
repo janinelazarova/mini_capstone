@@ -6,6 +6,7 @@
   json.active product.active
   json.supplier_name product.supplier.name
   json.images product.images
+  json.current_user current_user
 
   
   json.formated_fields do

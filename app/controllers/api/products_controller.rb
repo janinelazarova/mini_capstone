@@ -1,5 +1,7 @@
 class Api::ProductsController < ApplicationController
 
+  before_action :authenticate_user
+  
   def index
     @products = Product.all
 
