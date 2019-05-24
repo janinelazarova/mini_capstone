@@ -7,8 +7,8 @@
   json.supplier_name product.supplier.name
   json.images product.images
   json.current_user current_user
+  json.category_names product.category_names
 
-  
   json.formated_fields do
     json.price number_to_currency(product.price)
     json.tax number_to_currency(product.tax)
