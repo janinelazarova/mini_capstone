@@ -1,33 +1,36 @@
 class Product < ApplicationRecord
-  
+
   has_many :product_categories
   has_many :categories, through: :product_categories
-  has_many :orders
-  belongs_to :supplier #single supplier hash
 
+  has_many :carted_products
+  has_many :orders, through: :carted_products
+
+  belongs_to :supplier #single supplier hash
   # def supplier
   #   Supplier.find_by(id: supplier_id)
   # end
-
   has_many :images
 
-  validates :name, presence: true, uniqueness: true 
-  validates :price, numericality: {greater_than: 0} 
-  #validates :description, length: {in: 10..500}
+  validates :name, presence: true, uniqueness: true
+  validates :price, numericality: {greater_than: 0}
+  # validates :description, length: {in: 10..500}
 
   def category_names
     categories.map { |category| category.name }
   end
 
   def is_discounted?
-    price <= 10   
+    price <= 10
   end
 
   def tax
-     (price * 0.09).round(2)
+    price * 0.09
   end
 
   def total
-     price + tax
+    price + tax
   end
+
 end
+
